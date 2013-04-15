@@ -33,8 +33,8 @@ esac
 # init libtool
 # =============================
 LT_INIT
-dnl AC_CONFIG_SRCDIR([src/master.c])
-AM_INIT_AUTOMAKE([libgovernor], [0.1])
+AC_CONFIG_SRCDIR([src/ring.c])
+AM_INIT_AUTOMAKE
 
 AC_COPYRIGHT([Copyright (C) 2010-2011 Piotr Esden-Tempski])
 AC_DEFINE([COPYRIGHT],["Copyright (C) 2010-2011 Piotr Esden-Tempski <piotr@esden.net>"],[Software package copyright])
@@ -85,7 +85,6 @@ AC_HEADER_STAT
 # Checks for typedefs, structures, and compiler characteristics.
 # ==============================================================
 
-AM_C_PROTOTYPES
 AC_C_CONST
 AC_TYPE_UID_T     dnl This checks for gid_t too.
 dnl AC_CHECK_TYPES([ssize_t])
@@ -178,8 +177,7 @@ fi
 # Put config.h in the base directory because libintl expects it here,
 # but keep src/config.h.in in the src/ directory to keep the base directory
 # as clean as possible.
-dnl Don't quote the following argument, it is parsed by automake.
-AM_CONFIG_HEADER(include/config.h:include/config.h.in)
+AC_CONFIG_HEADERS([include/config.h:include/config.h.in])
 
 AC_CONFIG_FILES([
  Makefile
