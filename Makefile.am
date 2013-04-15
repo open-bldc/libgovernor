@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+ACLOCAL_AMFLAGS = -I m4
+
 LCOV_OUTPUT  = $(top_srcdir)/doc/lg_test_coverage
 LCOV_LCOV    = @LCOV@
 LCOV_GENHTML = @GENHTML@
@@ -43,7 +45,10 @@ include/stamp-h.in \
 depcomp \
 install-sh \
 ltmain.sh \
-missing
+missing \
+compile \
+test-driver \
+m4/*
 
 # Make sure no sticky bits go into the distribution.
 # (Debian policy is to create user directories in g+s,
