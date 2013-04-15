@@ -25,7 +25,7 @@ AC_INIT([libgovernor], [0.2], [open-bldc@open-bldc.org])
 case "$host" in
 	arm-*)
 		CFLAGS="$CFLAGS -mcpu=cortex-m3 -mthumb -mfix-cortex-m3-ldrd -ffunction-sections -fdata-sections -msoft-float -g"
-		LDFLAGS="$LDFLAGS -T${srcdir}/../firmware/src/stm32.ld -nostartfiles -mthumb -march=armv7 -mfix-cortex-m3-ldrd -msoft-float"
+		LDFLAGS="$LDFLAGS -T${srcdir}/src/stm32.ld -nostartfiles -mthumb -mcpu=cortex-m3 -mfix-cortex-m3-ldrd -msoft-float"
 	;;
 esac
 
@@ -33,6 +33,7 @@ esac
 # init libtool
 # =============================
 LT_INIT
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/ring.c])
 AM_INIT_AUTOMAKE
 
@@ -163,6 +164,8 @@ fi
 # ===============================
 # Test for check unittest library
 # ===============================
+
+AM_PROG_CC_C_O
 
 AC_ARG_ENABLE(check, AC_HELP_STRING([--enable-check],[turn on check unittest library]))
 if test "x$enable_check" = "xyes";
