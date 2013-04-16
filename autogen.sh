@@ -7,4 +7,6 @@
 
 set -e
 
+mkdir m4
+
 autoreconf -i
