@@ -1,10 +1,12 @@
 Makefile
 Makefile.in
 aclocal.m4
+m4
 autom4te.cache
 config.guess
 config.sub
 configure
+compile
 depcomp
 install-sh
 ltmain.sh
@@ -15,9 +17,11 @@ config.status
 config.h
 stamp-h1
 libtool
+test-driver
 .deps
 .libs
 *.lo
 *.la
 *.a
 *~
+*.o
