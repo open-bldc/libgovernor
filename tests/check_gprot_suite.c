@@ -21,7 +21,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "lg/types.h"
 #include "lg/gpdef.h"
 #include "lg/gprotm.h"
 #include "lg/gprotc.h"
@@ -29,7 +28,7 @@
 #include "check_utils.h"
 #include "check_suites.h"
 
-u16 gp_register_map[32];
+uint16_t gp_register_map[32];
 
 int gpm_register_changed = 0;
 int gpm_register_changed_addr = 0;
@@ -41,7 +40,7 @@ int gpc_get_version = 0;
 
 void gpm_trigger_output_hook(void *data)
 {
-        s32 dat;
+        int32_t dat;
 
 	data = data;
 
@@ -51,7 +50,7 @@ void gpm_trigger_output_hook(void *data)
 	}
 }
 
-void gpm_register_changed_hook(void *data, u8 addr)
+void gpm_register_changed_hook(void *data, uint8_t addr)
 {
 	data = data;
 
@@ -61,7 +60,7 @@ void gpm_register_changed_hook(void *data, u8 addr)
 
 void gpc_trigger_output_hook(void* data)
 {
-	s32 dat;
+	int32_t dat;
 
 	data = data;
 
@@ -114,7 +113,7 @@ void clean_gprot_tc(void)
 
 START_TEST(test_gprot_write)
 {
-	u8 addr = 0;
+	uint8_t addr = 0;
 
 	for(addr=0; addr<32; addr++){
 		fail_unless(0 == gpm_send_set(addr, 0x0000));
@@ -138,7 +137,7 @@ END_TEST
 
 START_TEST(test_gprot_read)
 {
-	u8 addr;
+	uint8_t addr;
 
 	for(addr=0; addr<32; addr++){
 		gp_register_map[addr] = 0x0000;
@@ -171,7 +170,7 @@ END_TEST
 
 START_TEST(test_gprot_read_write)
 {
-	u8 addr;
+	uint8_t addr;
 
 	for(addr=0; addr<32; addr++){
 		fail_unless(0 == gpm_send_set(addr, 0x0000+addr));

@@ -21,8 +21,10 @@
 #ifndef GPDEF_H
 #define GPDEF_H
 
+#include <stdint.h>
+
 typedef void (*gp_simple_hook_t) (void *data);
-typedef void (*gp_with_addr_hook_t) (void *data, u8 addr);
+typedef void (*gp_with_addr_hook_t) (void *data, uint8_t addr);
 typedef void (*gp_with_string_hook_t) (void *data, char *string, int size);
 
 #define GP_STR_PAK_MAX_LEN 0x7F

@@ -16,8 +16,7 @@
 
 libgovernor_libincludedir = $(includedir)/lg
 
-libgovernor_libinclude_HEADERS = lg/types.h \
-				 lg/ring.h \
+libgovernor_libinclude_HEADERS = lg/ring.h \
 				 lg/gpdef.h \
 				 lg/gprotm.h \
 				 lg/gprotc.h

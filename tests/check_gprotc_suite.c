@@ -21,14 +21,13 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "lg/types.h"
 #include "lg/gpdef.h"
 #include "lg/gprotc.h"
 
 #include "check_utils.h"
 #include "check_suites.h"
 
-u16 gpc_dummy_register_map[32];
+uint16_t gpc_dummy_register_map[32];
 
 void *gpc_dummy_trigger_output_data = 0;
 int gpc_dummy_trigger_output_triggered = 0;
@@ -44,7 +43,7 @@ void gpc_dummy_trigger_output_hook(void* data)
 	gpc_dummy_trigger_output_triggered = 1;
 }
 
-void gpc_dummy_register_changed_hook(void* data, u8 addr)
+void gpc_dummy_register_changed_hook(void* data, uint8_t addr)
 {
 	gpc_dummy_register_changed_data = data;
 	gpc_dummy_register_changed = 1;
@@ -83,7 +82,7 @@ void clean_gprotc_tc(void)
 START_TEST(test_gprotc_send_reg)
 {
 	int i;
-	u8 addr;
+	uint8_t addr;
 
 	addr = 0;
 	for(i = 0; i<256; i++){
@@ -119,7 +118,7 @@ END_TEST
 
 START_TEST(test_gprotc_handle_byte_read)
 {
-	u8 addr = 0;
+	uint8_t addr = 0;
 
 	for(addr=0; addr<32; addr++){
 		fail_unless(0 == gpc_setup_reg(addr, &gpc_dummy_register_map[addr]));
@@ -149,8 +148,8 @@ END_TEST
 
 START_TEST(test_gprotc_handle_byte_write)
 {
-	u8 addr = 0;
-	u16 data = 0xDADE;
+	uint8_t addr = 0;
+	uint16_t data = 0xDADE;
 
 	for(addr=0; addr<32; addr++){
 		fail_unless(0 == gpc_setup_reg(addr, &gpc_dummy_register_map[addr]));
@@ -186,7 +185,7 @@ END_TEST
 
 START_TEST(test_gprotc_read_cont)
 {
-	u16 addr = 0;
+	uint16_t addr = 0;
 
 	for(addr=0; addr<32; addr++){
 		fail_unless(0 == gpc_setup_reg(addr, &gpc_dummy_register_map[addr]));
@@ -282,8 +281,8 @@ END_TEST
 
 START_TEST(test_gprotc_send_version)
 {
-	s32 ch;
-	s32 to_read;
+	int32_t ch;
+	int32_t to_read;
 	int i, j;
 	char string[3][128];
 

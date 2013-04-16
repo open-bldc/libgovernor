@@ -21,7 +21,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "lg/types.h"
 #include "lg/gpdef.h"
 #include "lg/gprotm.h"
 
@@ -45,7 +44,7 @@ void gpm_dummy_trigger_output_hook(void *data)
 	gpm_dummy_trigger_output_triggered = 1;
 }
 
-void gpm_dummy_register_changed_hook(void *data, u8 addr)
+void gpm_dummy_register_changed_hook(void *data, uint8_t addr)
 {
 	gpm_dummy_register_changed_data = data;
 	gpm_dummy_register_changed_addr = addr;
@@ -79,7 +78,7 @@ void clean_gprotm_tc(void)
 
 START_TEST(test_gprotm_get_register_map_val)
 {
-	u8 addr;
+	uint8_t addr;
 
 	for(addr = 0; addr<32; addr++){
 		fail_unless(0x0000 == gpm_get_register_map_val(addr));
@@ -93,7 +92,7 @@ END_TEST
 
 START_TEST(test_gprotm_send_set)
 {
-	u8 addr;
+	uint8_t addr;
 
 	/* test data zero */
 	for(addr = 0; addr<32; addr++){
@@ -163,7 +162,7 @@ END_TEST
 
 START_TEST(test_gprotm_send_get)
 {
-	u8 addr;
+	uint8_t addr;
 
 	/* test all valid addresses */
 	for(addr = 0; addr<32; addr++){
@@ -193,7 +192,7 @@ END_TEST
 
 START_TEST(test_gprotm_send_get_cont)
 {
-	u8 addr;
+	uint8_t addr;
 
 	/* test all valid addresses */
 	for(addr = 0; addr<32; addr++){
@@ -238,8 +237,8 @@ END_TEST
 
 START_TEST(test_gprotm_handle_byte_registers)
 {
-	u8 addr = 0;
-	u16 data = 0;
+	uint8_t addr = 0;
+	uint16_t data = 0;
 
 	/* check all valid addresses with data zero */
 	for(addr=0; addr<32; addr++){

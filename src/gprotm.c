@@ -36,7 +36,8 @@
 #define DEBUG(STR, ARGS...)
 #endif
 
-#include "lg/types.h"
+#include <stdint.h>
+
 #include "lg/ring.h"
 #include "lg/gpdef.h"
 #include "lg/gprotm.h"
@@ -57,10 +58,10 @@ struct gpm_hooks {
 	void *string_received_data;
 } gpm_hooks;
 
-u16 gpm_register_map[32];
+uint16_t gpm_register_map[32];
 
 struct ring gpm_output_ring;
-u8 gpm_output_buffer[128];
+uint8_t gpm_output_buffer[128];
 
 enum gpm_states {
 	GPMS_IDLE,
@@ -69,11 +70,11 @@ enum gpm_states {
 	GPMS_STRING
 };
 enum gpm_states gpm_state = GPMS_IDLE;
-u16 gpm_addr;
-u16 gpm_data;
+uint16_t gpm_addr;
+uint16_t gpm_data;
 char gpm_string[128];
-u16 gpm_string_len;
-u16 gpm_string_count;
+uint16_t gpm_string_len;
+uint16_t gpm_string_count;
 
 int gpm_init(gp_simple_hook_t trigger_output, void *trigger_output_data,
 	     gp_with_addr_hook_t register_changed, void *register_changed_data)
@@ -114,7 +115,7 @@ int gpm_set_string_received_callback(gp_with_string_hook_t string_received, void
 	return 0;
 }
 
-s32 gpm_get_register_map_val(u8 addr)
+int32_t gpm_get_register_map_val(uint8_t addr)
 {
 	if (addr > 31)
 		return -1;
@@ -122,14 +123,14 @@ s32 gpm_get_register_map_val(u8 addr)
 	return gpm_register_map[addr];
 }
 
-s32 gpm_pickup_byte(void)
+int32_t gpm_pickup_byte(void)
 {
 	return ring_read_ch(&gpm_output_ring, 0);
 }
 
-int gpm_send_set(u8 addr, u16 val)
+int gpm_send_set(uint8_t addr, uint16_t val)
 {
-	u8 dat[3];
+	uint8_t dat[3];
 
 	if (addr > 31)
 		return 1;
@@ -150,9 +151,9 @@ int gpm_send_set(u8 addr, u16 val)
 	return 1;
 }
 
-int gpm_send_get(u8 addr)
+int gpm_send_get(uint8_t addr)
 {
-	u8 out = addr | GP_MODE_READ | GP_MODE_PEEK;
+	uint8_t out = addr | GP_MODE_READ | GP_MODE_PEEK;
 
 	if (addr > 31)
 		return 1;
@@ -166,9 +167,9 @@ int gpm_send_get(u8 addr)
 	return 1;
 }
 
-int gpm_send_get_cont(u8 addr)
+int gpm_send_get_cont(uint8_t addr)
 {
-	u8 out = addr | GP_MODE_READ | GP_MODE_CONT;
+	uint8_t out = addr | GP_MODE_READ | GP_MODE_CONT;
 
 	if (addr > 31)
 		return 1;
@@ -193,7 +194,7 @@ int gpm_send_get_version(void)
 	return 1;
 }
 
-int gpm_handle_byte(u8 byte)
+int gpm_handle_byte(uint8_t byte)
 {
 	switch (gpm_state) {
 	case GPMS_IDLE:

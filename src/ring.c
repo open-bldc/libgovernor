@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lg/types.h"
+#include <stdint.h>
 
 #include "lg/ring.h"
 
-void ring_init(struct ring *ring, u8 * buf, ring_size_t size)
+void ring_init(struct ring *ring, uint8_t * buf, ring_size_t size)
 {
 	ring->data = buf;
 	ring->size = size;
@@ -28,20 +28,20 @@ void ring_init(struct ring *ring, u8 * buf, ring_size_t size)
 	ring->end = 0;
 }
 
-s32 ring_write_ch(struct ring *ring, u8 ch)
+int32_t ring_write_ch(struct ring *ring, uint8_t ch)
 {
 	if (((ring->end + 1) % ring->size) != ring->begin) {
 		ring->data[ring->end++] = ch;
 		ring->end %= ring->size;
-		return (u32) ch;
+		return (int32_t) ch;
 	}
 
 	return -1;
 }
 
-s32 ring_write(struct ring * ring, u8 * data, ring_size_t size)
+int32_t ring_write(struct ring * ring, uint8_t * data, ring_size_t size)
 {
-	s32 i;
+	int32_t i;
 
 	for (i = 0; i < size; i++) {
 		if (ring_write_ch(ring, data[i]) < 0) {
@@ -52,7 +52,7 @@ s32 ring_write(struct ring * ring, u8 * data, ring_size_t size)
 	return i;
 }
 
-s32 ring_safe_write_ch(struct ring *ring, u8 ch)
+int32_t ring_safe_write_ch(struct ring *ring, uint8_t ch)
 {
 	int ret;
 	int retry_count = 100;
@@ -64,9 +64,9 @@ s32 ring_safe_write_ch(struct ring *ring, u8 ch)
 	return ret;
 }
 
-s32 ring_safe_write(struct ring * ring, u8 * data, ring_size_t size)
+int32_t ring_safe_write(struct ring * ring, uint8_t * data, ring_size_t size)
 {
-	s32 i;
+	int32_t i;
 
 	for (i = 0; i < size; i++) {
 		if (0 > ring_safe_write_ch(ring, data[i])) {
@@ -77,9 +77,9 @@ s32 ring_safe_write(struct ring * ring, u8 * data, ring_size_t size)
 	return i;
 }
 
-s32 ring_read_ch(struct ring * ring, u8 * ch)
+int32_t ring_read_ch(struct ring * ring, uint8_t * ch)
 {
-	s32 ret = -1;
+	int32_t ret = -1;
 
 	if (ring->begin != ring->end) {
 		ret = ring->data[ring->begin++];
@@ -91,9 +91,9 @@ s32 ring_read_ch(struct ring * ring, u8 * ch)
 	return ret;
 }
 
-s32 ring_read(struct ring * ring, u8 * data, ring_size_t size)
+int32_t ring_read(struct ring * ring, uint8_t * data, ring_size_t size)
 {
-	s32 i;
+	int32_t i;
 
 	for (i = 0; i < size; i++) {
 		if (ring_read_ch(ring, data + i) < 0) {

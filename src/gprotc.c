@@ -27,9 +27,9 @@
 
 #include "config.h"
 
+#include <stdint.h>
 #include <string.h>
 
-#include "lg/types.h"
 #include "lg/ring.h"
 #include "lg/gpdef.h"
 
@@ -44,12 +44,12 @@ struct gpc_hooks {
 	void *get_version_data;
 } gpc_hooks;
 
-volatile u16 *gpc_register_map[32];
+volatile uint16_t *gpc_register_map[32];
 
 #define GPC_OUTPUT_BUFFER_SIZE 1024
 
 struct ring gpc_output_ring;
-u8 gpc_output_buffer[GPC_OUTPUT_BUFFER_SIZE];
+uint8_t gpc_output_buffer[GPC_OUTPUT_BUFFER_SIZE];
 
 enum gpc_states {
 	GPCS_IDLE,
@@ -57,10 +57,10 @@ enum gpc_states {
 	GPCS_DATA_MSB
 };
 enum gpc_states gpc_state = GPCS_IDLE;
-u16 gpc_addr;
-u16 gpc_data;
+uint16_t gpc_addr;
+uint16_t gpc_data;
 
-u32 gpc_monitor_map;
+uint32_t gpc_monitor_map;
 
 #define GPC_VERSION PACKAGE_STRING VERSION_SUFFIX ", build " BUILDDATE "\n"
 #define GPC_COPYRIGHT COPYRIGHT "\n"
@@ -99,7 +99,7 @@ int gpc_set_get_version_callback(gp_simple_hook_t get_version, void *get_version
 	return 0;
 }
 
-int gpc_setup_reg(u8 addr, volatile u16 * reg)
+int gpc_setup_reg(uint8_t addr, volatile uint16_t * reg)
 {
 	if (addr > 31)
 		return 1;
@@ -111,14 +111,14 @@ int gpc_setup_reg(u8 addr, volatile u16 * reg)
 	return 0;
 }
 
-s32 gpc_pickup_byte(void)
+int32_t gpc_pickup_byte(void)
 {
 	return ring_read_ch(&gpc_output_ring, 0);
 }
 
-int gpc_send_reg(u8 addr)
+int gpc_send_reg(uint8_t addr)
 {
-	u8 dat[3];
+	uint8_t dat[3];
 
 	if ((addr > 31) | !gpc_register_map[addr])
 		return 1;
@@ -151,7 +151,7 @@ int gpc_send_string(char *string, int len)
 		}
 
 		/* Send packet contents */
-		if (0 > ring_safe_write(&gpc_output_ring, (u8 *)(string + (i * GP_STR_PAK_MAX_LEN)), GP_STR_PAK_MAX_LEN)) {
+		if (0 > ring_safe_write(&gpc_output_ring, (uint8_t *)(string + (i * GP_STR_PAK_MAX_LEN)), GP_STR_PAK_MAX_LEN)) {
 			return -1;
 		}
 	}
@@ -160,7 +160,7 @@ int gpc_send_string(char *string, int len)
 		return -1;
 	}
 
-	if (0 > ring_safe_write(&gpc_output_ring, (u8 *)(string + (i * GP_STR_PAK_MAX_LEN)), (len % GP_STR_PAK_MAX_LEN))) {
+	if (0 > ring_safe_write(&gpc_output_ring, (uint8_t *)(string + (i * GP_STR_PAK_MAX_LEN)), (len % GP_STR_PAK_MAX_LEN))) {
 		return -1;
 	}
 
@@ -170,7 +170,7 @@ int gpc_send_string(char *string, int len)
 	return len;
 }
 
-int gpc_handle_byte(u8 byte)
+int gpc_handle_byte(uint8_t byte)
 {
 	DEBUG("got byte %04X ", byte);
 
@@ -237,7 +237,7 @@ int gpc_handle_byte(u8 byte)
 	return 0;
 }
 
-int gpc_register_touched(u8 addr)
+int gpc_register_touched(uint8_t addr)
 {
 	if (addr > 31)
 		return 1;

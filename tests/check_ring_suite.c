@@ -20,13 +20,12 @@
 
 #include <string.h>
 
-#include "lg/types.h"
 #include "lg/ring.h"
 
 #include "check_suites.h"
 
 struct ring test_ring;
-u8 data[10];
+uint8_t data[10];
 
 void init_ring_tc(void)
 {
@@ -47,10 +46,10 @@ END_TEST
 
 START_TEST(test_ring_write_read_one)
 {
-	s32 ret;
-	u8 ch;
+	int32_t ret;
+	uint8_t ch;
 
-	ret = ring_write_ch(&test_ring, (u8)'A');
+	ret = ring_write_ch(&test_ring, (uint8_t)'A');
 
 	fail_unless('A' == ret);
 
@@ -63,11 +62,11 @@ END_TEST
 
 START_TEST(test_ring_write_read_max)
 {
-	s32 ret;
-	u8 i, ch;
+	int32_t ret;
+	uint8_t i, ch;
 
 	for(i=0; i<9; i++){
-		ret = (u8)ring_write_ch(&test_ring, i);
+		ret = (uint8_t)ring_write_ch(&test_ring, i);
 
 		fail_unless(i == ret);
 	}
@@ -75,7 +74,7 @@ START_TEST(test_ring_write_read_max)
 	fail_unless(-1 == ring_write_ch(&test_ring, 10));
 
 	for(i=0; i<9; i++){
-		ret = (u8)ring_read_ch(&test_ring, &ch);
+		ret = (uint8_t)ring_read_ch(&test_ring, &ch);
 
 		fail_unless(i == ret);
 		fail_unless(i == ch);
@@ -89,9 +88,9 @@ END_TEST
 
 START_TEST(test_ring_write_read_array)
 {
-	u8 array[10];
-	u8 array1[] = "ABCD";
-	u8 array2[] = "EFGHIJ";
+	uint8_t array[10];
+	uint8_t array1[] = "ABCD";
+	uint8_t array2[] = "EFGHIJ";
 
 	fail_unless(4 == ring_write(&test_ring, array1, 4));
 	fail_unless(-5 == ring_write(&test_ring, array2, 6));
@@ -102,12 +101,12 @@ START_TEST(test_ring_write_read_array)
 	fail_unless(0 != memcmp(array, "ABCDEFGHIJ", 10));
 
 	memset(array, 0, 10);
-	fail_unless(4 == ring_write(&test_ring, (u8 *)"ABCD", 4));
+	fail_unless(4 == ring_write(&test_ring, (uint8_t *)"ABCD", 4));
 	fail_unless(4 == ring_read(&test_ring, array, 10));
 	fail_unless(0 == memcmp(array, "ABCD", 4));
 
 	memset(array, 0, 10);
-	fail_unless(6 == ring_write(&test_ring, (u8 *)"ABCDEF", 6));
+	fail_unless(6 == ring_write(&test_ring, (uint8_t *)"ABCDEF", 6));
 	fail_unless(-4 == ring_read(&test_ring, array, 4));
 	fail_unless(0 == memcmp(array, "ABCD", 4));
 }

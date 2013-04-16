@@ -23,20 +23,24 @@
 #ifndef GPROTM_H
 #define GPROTM_H
 
+#include <stdint.h>
+
+#include "lg/gpdef.h"
+
 int gpm_init(gp_simple_hook_t trigger_output, void *trigger_output_data,
 	     gp_with_addr_hook_t register_changed, void *register_changed_data);
 
 int gpm_set_log(gp_simple_hook_t cb, void *data);
 int gpm_set_string_received_callback(gp_with_string_hook_t string_received, void *string_received_data);
 
-s32 gpm_get_register_map_val(u8 addr);
-s32 gpm_pickup_byte(void);
+int32_t gpm_get_register_map_val(uint8_t addr);
+int32_t gpm_pickup_byte(void);
 
-int gpm_send_set(u8 addr, u16 val);
-int gpm_send_get(u8 addr);
-int gpm_send_get_cont(u8 addr);
+int gpm_send_set(uint8_t addr, uint16_t val);
+int gpm_send_get(uint8_t addr);
+int gpm_send_get_cont(uint8_t addr);
 int gpm_send_get_version(void);
 
-int gpm_handle_byte(u8 byte);
+int gpm_handle_byte(uint8_t byte);
 
 #endif /* GPROTM_H */

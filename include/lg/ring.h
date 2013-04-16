@@ -19,24 +19,26 @@
 #ifndef RING_H
 #define RING_H
 
-typedef s32 ring_size_t;
+#include <stdint.h>
+
+typedef int32_t ring_size_t;
 
 struct ring {
-	u8 *data;
+	uint8_t *data;
 	ring_size_t size;
-	u32 begin;
-	u32 end;
+	uint32_t begin;
+	uint32_t end;
 };
 
 #define RING_SIZE(RING) ((RING)->size - 1)
 #define RING_DATA(RING) (RING)->data
 
-void ring_init(struct ring *ring, u8 * buf, ring_size_t size);
-s32 ring_write_ch(struct ring *ring, u8 ch);
-s32 ring_write(struct ring *ring, u8 * data, ring_size_t size);
-s32 ring_safe_write_ch(struct ring *ring, u8 ch);
-s32 ring_safe_write(struct ring *ring, u8 * data, ring_size_t size);
-s32 ring_read_ch(struct ring *ring, u8 * ch);
-s32 ring_read(struct ring *ring, u8 * data, ring_size_t size);
+void ring_init(struct ring *ring, uint8_t * buf, ring_size_t size);
+int32_t ring_write_ch(struct ring *ring, uint8_t ch);
+int32_t ring_write(struct ring *ring, uint8_t * data, ring_size_t size);
+int32_t ring_safe_write_ch(struct ring *ring, uint8_t ch);
+int32_t ring_safe_write(struct ring *ring, uint8_t * data, ring_size_t size);
+int32_t ring_read_ch(struct ring *ring, uint8_t * ch);
+int32_t ring_read(struct ring *ring, uint8_t * data, ring_size_t size);
 
 #endif /* RING_H */
