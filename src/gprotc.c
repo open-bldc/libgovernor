@@ -62,6 +62,18 @@ uint16_t gpc_data;
 
 uint32_t gpc_monitor_map;
 
+#ifndef PACKAGE_STRING
+#define PACKAGE_STRING "null"
+#endif
+
+#ifndef VERSION_SUFFIX
+#define VERSION_SUFFIX "null"
+#endif
+
+#ifndef BUILDDATE
+#define BUILDDATE "null"
+#endif
+
 #define GPC_VERSION PACKAGE_STRING VERSION_SUFFIX ", build " BUILDDATE "\n"
 #define GPC_COPYRIGHT COPYRIGHT "\n"
 #define GPC_LICENSE LICENSE "\n"
